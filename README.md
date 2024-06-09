@@ -366,6 +366,30 @@ jwt.verify(token, 'shhhhh', function(err, decoded) {
 });
 ```
 
+### InvalidPayloadError
+Thrown if the payload validation callback failed. The error message will be inherited from the error thrown in the `payloadCallback` or defaults to *'invalid token payload'* if for example a number was thrown and not an error
+
+Error object example:
+
+* name: 'InvalidPayloadError'
+* message: 'invalid token payload'
+
+```js
+jwt.verify(token, 'shhhhh', function(err, decoded) {
+  if (err) {
+    /*
+      err = {
+        name: 'InvalidPayloadError',
+        message: 'foo property not equal to bar',
+      }
+    */
+  }
+}, function (payload) {
+  if (payload.foo !== 'bar') {
+    throw new Error('foo property not equal to bar');
+  }
+});
+```
 
 ## Algorithms supported
 
